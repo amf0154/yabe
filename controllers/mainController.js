@@ -1,18 +1,31 @@
+const queries = require('../db/queries');
 
 
+function getArticles (ctx, next){
+    return new Promise((resolve,reject)=> {
+        queries.getAll().then(articles =>{
+            if(articles){
+                resolve(articles); 
+            }else{
+                reject('data not found!');
+            }
+        });
+    }).then((data) => ctx.body = data);
 
-function home (ctx, next){
-    ctx.body = 'Hello World!';
+} 
+function getArticleById (ctx, next){
+    return new Promise((resolve,reject)=> {
+        queries.getArticleById(ctx.params.id).then(articles =>{
+            if(articles){
+                resolve(articles); 
+            }else{
+                reject(Error('Article with such id haven\'t been not found'));
+            }
+        });
+    }).then((data) => ctx.body = data);
 
 }
 
-function params (ctx, next){
-  // ctx.response.status = 401;
-  let req = ctx.params.id;
-  console.log(req);
-  ctx.body = req;
- 
- }
  function query (ctx, next){
     let req = ctx.query;
     console.log(req);
@@ -20,7 +33,7 @@ function params (ctx, next){
 }
 
 module.exports = {
-    home,
-    params,
+    getArticles,
+    getArticleById,
     query
 };
