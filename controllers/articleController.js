@@ -1,5 +1,5 @@
 const queries = require('../db/queries');
-
+const checks = require('../helpers/checkers');
 
 function getArticles (ctx, next){
     return new Promise((resolve,reject)=> {
@@ -26,6 +26,12 @@ function getArticleById (ctx, next){
 
 }
 
+function addArticle (ctx, next){
+ // queries.addArticle(ctx.query)
+    ctx.body = ctx.query;
+}
+
+
  function query (ctx, next){
     let req = ctx.query;
     console.log(req);
@@ -35,5 +41,6 @@ function getArticleById (ctx, next){
 module.exports = {
     getArticles,
     getArticleById,
+    addArticle,
     query
 };

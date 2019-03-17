@@ -1,5 +1,5 @@
 const queries = require('../db/queries');
-
+const checks = require('../helpers/checkers');
 
 function getComments (ctx, next){
     return new Promise((resolve,reject)=> {
@@ -15,7 +15,7 @@ function getComments (ctx, next){
 } 
 function getCommentsByArticleId (ctx, next){
     return new Promise((resolve,reject)=> {
-        queries.getCommentsByArticleId(ctx.params.article_id).then(comments =>{
+        queries.getCommentsByArticleId(ctx.params.id).then(comments =>{
             if(comments){
                 resolve(comments); 
             }else{
@@ -26,7 +26,13 @@ function getCommentsByArticleId (ctx, next){
 
 }
 
+function addComment (ctx, next){
+        ctx.body = ctx.query;
+
+}
+
 module.exports = {
     getComments,
+    addComment,
     getCommentsByArticleId
 };
