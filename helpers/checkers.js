@@ -11,7 +11,8 @@ function isValidArticle(ctx,next){
 function isValidComment(ctx,next){
     let hasDescription = typeof ctx.query.description == 'string' && ctx.query.description.trim() != '';
     let hasAuthor = typeof ctx.query.author == 'string' && ctx.query.author.trim() != '';
-    return (hasDescription && hasAuthor) ? next() : ctx.response.status = 400; 
+    let hasArticle_id = ctx.query.article_id.trim() != '';
+    return (hasDescription && hasAuthor && hasArticle_id) ? next() : ctx.response.status = 400; 
 }
 
 module.exports ={

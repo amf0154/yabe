@@ -1,5 +1,4 @@
 const queries = require('../db/queries');
-const checks = require('../helpers/checkers');
 
 function getArticles (ctx, next){
     return new Promise((resolve,reject)=> {
@@ -26,21 +25,47 @@ function getArticleById (ctx, next){
 
 }
 
-function addArticle (ctx, next){
- // queries.addArticle(ctx.query)
-    ctx.body = ctx.query;
+function addArticle (ctx, next){   
+    return new Promise((resolve,reject)=> {
+        queries.addArticle(ctx.query).then(articles =>{
+            if(articles){
+                resolve(articles); 
+            }else{
+                reject(Error('Can\'t add article, something has gone wrong'));
+            }
+        });
+    }).then((data) => ctx.body = data);  
 }
 
-
- function query (ctx, next){
-    let req = ctx.query;
-    console.log(req);
-    ctx.body = req;
+function editArticle (ctx, next){   
+    return new Promise((resolve,reject)=> {
+        queries.editArticle(ctx.params.id,ctx.query).then(article =>{
+            if(article){
+                resolve(article); 
+            }else{
+                reject(Error('Can\'t edit article, something has gone wrong'));
+            }
+        });
+    }).then((data) => ctx.body = data);  
 }
+
+function delArticle (ctx, next){   
+    return new Promise((resolve,reject)=> {
+        queries.deleteArticle(ctx.params.id).then(article =>{
+            if(article){
+                resolve(article); 
+            }else{
+                reject(Error('Can\'t delete article, something has gone wrong'));
+            }
+        });
+    }).then((data) => ctx.body = data);  
+}
+
 
 module.exports = {
     getArticles,
+    editArticle,
     getArticleById,
     addArticle,
-    query
+    delArticle
 };
