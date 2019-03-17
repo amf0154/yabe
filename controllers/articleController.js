@@ -1,6 +1,5 @@
 const Articles = require('../models/articles');
 const article = new Articles();
-
 function getArticles (ctx, next){ 
     return new Promise((resolve,reject)=> {
         Articles.query().then(articles =>{

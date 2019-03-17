@@ -1,9 +1,22 @@
 const { Model } = require('objection');
-
+const Articles = require('../models/articles');
 class Comments extends Model {
 
 static get tableName() {
     return 'comments';
+}
+
+static get relationMappings () {
+    return {
+      articles: {
+        relation: Model.BelongsToOneRelation,
+        modelClass: Articles,
+        join: {
+          from: 'comments.article_id',
+          to: 'article.id'
+        }
+      }
+    }
 }
 
 async getAllComments() { 

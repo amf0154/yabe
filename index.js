@@ -2,6 +2,7 @@ const Koa = require('koa');
 const logger = require('koa-logger');
 const Router = require('koa-router');
 const app = new Koa();
+const knex = require('./db/knex');
 // log all events to the terminal
 app.use(logger());
 

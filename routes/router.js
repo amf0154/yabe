@@ -5,14 +5,26 @@ const api_path = '/api/';
 
 module.exports = ({ router }) => {   
 router.get('/', ctx => ctx.body = 'What are you looking for? :P' ); 
+
+// get all articles
 router.get(api_path + 'articles', articlesCtrl.getArticles); 
-router.get(api_path + 'article/:id', checks.isValidId, articlesCtrl.getArticleById);  
-router.put(api_path + 'article/:id', checks.isValidId, checks.isValidArticle, articlesCtrl.editArticle); 
-router.post(api_path + 'article', checks.isValidArticle, articlesCtrl.addArticle); 
-router.delete(api_path + 'article/:id', checks.isValidId, articlesCtrl.delArticle);  
+// get article by id
+router.get(api_path + 'articles/:id', checks.isValidId, articlesCtrl.getArticleById); 
+// update article (title, description, author) by id
+router.put(api_path + 'articles/:id', checks.isValidId, checks.isValidArticle, articlesCtrl.editArticle); 
+//add article (title, description, author)
+router.post(api_path + 'articles', checks.isValidArticle, articlesCtrl.addArticle); 
+//delete article by id
+router.delete(api_path + 'articles/:id', checks.isValidId, articlesCtrl.delArticle);
+
+//get all comments  
 router.get(api_path + 'comments', commentsCtrl.getComments); 
-router.get(api_path + 'comment/:id',checks.isValidId, commentsCtrl.getCommentsByArticleId);
-router.put(api_path + 'comment/:id', checks.isValidId, checks.isValidComment, commentsCtrl.editComment); 
-router.post(api_path + 'comment',checks.isValidComment, commentsCtrl.addComment); 
-router.delete(api_path + 'comment/:id',checks.isValidId, commentsCtrl.delComment);
+// get comments for article by 'article_id'  !!!!!!!!!!!!!!!!!!!
+router.get(api_path + 'comments/:id',checks.isValidId, commentsCtrl.getCommentsByArticleId);
+//update comment (description, article_id, author) by id
+router.put(api_path + 'comments/:id', checks.isValidId, checks.isValidComment, commentsCtrl.editComment); 
+//add comment (description, article_id, author)
+router.post(api_path + 'comments',checks.isValidComment, commentsCtrl.addComment); 
+//delete comment by id.
+router.delete(api_path + 'comments/:id',checks.isValidId, commentsCtrl.delComment);
 };
