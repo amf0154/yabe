@@ -1,33 +1,44 @@
 const queries = require('../db/queries');
+const Comments = require('../models/comments');
+const comment = new Comments();
 
 function getComments (ctx, next){
     return new Promise((resolve,reject)=> {
-        queries.getAllComments().then(comments =>{
+        Comments.query().then(comments =>{
             if(comments){
                 resolve(comments); 
             }else{
-                reject('comments not found!');
+                reject('Comments haven\'t been found');
             }
         });
-    }).then((data) => ctx.body = data);
+    }).then((data, err) => ctx.body = data,
+    err=>{
+        ctx.response.status = 404;
+        ctx.body = err;
+    });
 
 } 
 function getCommentsByArticleId (ctx, next){
     return new Promise((resolve,reject)=> {
-        queries.getCommentsByArticleId(ctx.params.id).then(comments =>{
+        comment.getCommentsByArticleId(ctx.params.id).then(comments =>{
             if(comments){
                 resolve(comments); 
             }else{
-                reject(Error('Comments with such article id haven\'t been not found'));
+                reject('Comments with such article id haven\'t been found');
             }
         });
-    }).then((data) => ctx.body = data);
+    }).then((data, err) => ctx.body = data,
+    err=>{
+        ctx.response.status = 404;
+        ctx.body = err;
+    });
+
 
 }
 
 function addComment (ctx, next){   
     return new Promise((resolve,reject)=> {
-        queries.addComment(ctx.query).then(comment =>{
+        comment.addComment(ctx.query).then(comment =>{
             if(comment){
                 resolve(comment); 
             }else{
@@ -39,7 +50,7 @@ function addComment (ctx, next){
 
 function editComment (ctx, next){   
     return new Promise((resolve,reject)=> {
-        queries.editComment(ctx.params.id,ctx.query).then(comment =>{
+        comment.editComment(ctx.params.id,ctx.query).then(comment =>{
             if(comment){
                 resolve(comment); 
             }else{
@@ -51,7 +62,7 @@ function editComment (ctx, next){
 
 function delComment (ctx, next){   
     return new Promise((resolve,reject)=> {
-        queries.delComment(ctx.params.id).then(comment =>{
+        comment.delComment(ctx.params.id).then(comment =>{
             if(comment){
                 resolve(comment); 
             }else{
