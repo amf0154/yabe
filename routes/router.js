@@ -1,9 +1,10 @@
 const articlesCtrl = require('../controllers/articleController');
 const commentsCtrl = require('../controllers/commentsController');
 const checks = require('../helpers/checkers');
+const api_path = '/api/';
 
 module.exports = ({ router }) => {
-const api_path = "/api/";
+router.get('/', ctx => ctx.body = 'What are you looking for? :P' ); 
 router.get(api_path + 'articles', articlesCtrl.getArticles); 
 router.get(api_path + 'article/:id', checks.isValidId, articlesCtrl.getArticleById);  
 router.put(api_path + 'article/:id', checks.isValidId, checks.isValidArticle, articlesCtrl.editArticle); 
