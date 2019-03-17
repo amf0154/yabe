@@ -3,7 +3,7 @@ const queries = require('../db/queries');
 
 function getArticles (ctx, next){
     return new Promise((resolve,reject)=> {
-        queries.getAll().then(articles =>{
+        queries.getAllArticles().then(articles =>{
             if(articles){
                 resolve(articles); 
             }else{

@@ -30,7 +30,7 @@ var knex = require('knex')({
 // instantiate our new Router
 const router = new Router();
 // require our external routes and pass in the router
-require('./routes/basic')({ router });
+require('./routes/router')({ router });
 
 // tells the router to use all the routes that are on the object
 app.use(router.routes());
