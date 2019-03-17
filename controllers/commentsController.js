@@ -1,4 +1,3 @@
-const queries = require('../db/queries');
 const Comments = require('../models/comments');
 const comment = new Comments();
 

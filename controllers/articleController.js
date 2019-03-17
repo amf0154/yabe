@@ -1,5 +1,3 @@
-const queries = require('../db/queries');
-const { model } = require('objection');
 const Articles = require('../models/articles');
 const article = new Articles();
 
