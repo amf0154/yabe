@@ -18,21 +18,21 @@ static get relationMappings () {
       }
     }
 }
-async getAllArticles() { 
+static async getAllArticles() { 
   return await Articles.query();  
 }
 
-async getArticleById(id){
+static async getArticleById(id){
     return await Articles.query().where('id', id) 
 }
 
-async addArticle(body){
+static async addArticle(body){
     return await Articles.query().insert(body);
 }
-async editArticle(id,body){
+static async editArticle(id,body){
     return await Articles.query().patch(body).where('id', id);
 }
-async deleteArticle(id){
+static async deleteArticle(id){
     return await Articles.query().deleteById(id);
 }
 }  

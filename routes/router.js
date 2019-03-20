@@ -1,30 +1,19 @@
 const articlesCtrl = require('../controllers/articleController');
 const commentsCtrl = require('../controllers/commentsController');
-const checks = require('../helpers/checkers');
+const middleware = require('../helpers/middleware');
 const api_path = '/api/';
-
 module.exports = ({ router }) => {   
 router.get('/', ctx => ctx.body = 'What are you looking for? :P' ); 
 
-// get all articles
 router.get(api_path + 'articles', articlesCtrl.getArticles); 
-// get article by id
-router.get(api_path + 'articles/:id', checks.isValidId, articlesCtrl.getArticleById); 
-// update article (title, description, author) by id
-router.put(api_path + 'articles/:id', checks.isValidId, checks.isValidArticle, articlesCtrl.editArticle); 
-//add article (title, description, author)
-router.post(api_path + 'articles', checks.isValidArticle, articlesCtrl.addArticle); 
-//delete article by id
-router.delete(api_path + 'articles/:id', checks.isValidId, articlesCtrl.delArticle);
+router.get(api_path + 'articles/:id', middleware.checkId, articlesCtrl.getArticleById); 
+router.put(api_path + 'articles/:id', middleware.checkId, middleware.checkArticle, articlesCtrl.editArticle); 
+router.post(api_path + 'articles', middleware.checkArticle, articlesCtrl.addArticle); 
+router.delete(api_path + 'articles/:id', middleware.checkId, articlesCtrl.delArticle);
 
-//get all comments  
 router.get(api_path + 'comments', commentsCtrl.getComments); 
-// get comments for article by 'article_id'  !!!!!!!!!!!!!!!!!!!
-router.get(api_path + 'comments/:id',checks.isValidId, commentsCtrl.getCommentsByArticleId);
-//update comment (description, article_id, author) by id
-router.put(api_path + 'comments/:id', checks.isValidId, checks.isValidComment, commentsCtrl.editComment); 
-//add comment (description, article_id, author)
-router.post(api_path + 'comments',checks.isValidComment, commentsCtrl.addComment); 
-//delete comment by id.
-router.delete(api_path + 'comments/:id',checks.isValidId, commentsCtrl.delComment);
+router.get(api_path + 'comments/:id', middleware.checkId, commentsCtrl.getCommentsByArticleId);
+router.put(api_path + 'comments/:id', middleware.checkId, middleware.checkComment, commentsCtrl.editComment); 
+router.post(api_path + 'comments', middleware.checkComment, commentsCtrl.addComment); 
+router.delete(api_path + 'comments/:id', middleware.checkId, commentsCtrl.delComment);
 };

@@ -3,7 +3,8 @@ const logger = require('koa-logger');
 const Router = require('koa-router');
 const app = new Koa();
 const knex = require('./db/knex');
-// log all events to the terminal
+var bodyParser = require('koa-bodyparser');
+app.use(bodyParser());
 app.use(logger());
 
 // error handling

@@ -19,25 +19,25 @@ static get relationMappings () {
     }
 }
 
-async getAllComments() { 
+static async getAllComments() { 
   return await Comments.query();  
 }
 
-async getCommentsByArticleId(id){
+static async getCommentsByArticleId(id){
     return await Comments.query().where('article_id', id); 
 }
 
-async getCommentsById(id){
+static async getCommentsById(id){
     return await Comments.query().where('id', id); 
 }
 
-async addComment(body){
+static async addComment(body){
     return await Comments.query().insert(body);
 }
-async editComment(id,body){
+static async editComment(id,body){
     return await Comments.query().patch(body).where('id', id);
 }
-async delComment(id){
+static async delComment(id){
     return await Comments.query().deleteById(id);
 }
 
