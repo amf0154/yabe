@@ -1,18 +1,25 @@
 const Comments = require('../models/comments');
-
+const Articles = require('../models/articles');
 async function getComments (ctx, next){
     return await Comments.getAllComments().then(data => ctx.body = data);
 } 
 
 async function getCommentsByArticleId (ctx, next){
-    return await Comments.getCommentsByArticleId(ctx.params.id).then(data => ctx.body = data);
+    let article = await Articles.getArticleById(ctx.params.id);
+    if(article.length !=0){
+        return await Comments.getCommentsByArticleId(ctx.params.id).then(data => ctx.body = data);
+    }else{
+        ctx.body = "Incorrect article id!";
+        ctx.response.status = 400;
+    }
 }
 
 async function addComment (ctx, next){   
-    try{
+    let article = await Articles.getArticleById(ctx.request.body.article_id);
+    if(article.length !=0){
         return await Comments.addComment(ctx.request.body).then(data => ctx.body = data);
-    }catch(err){
-        ctx.body = err.detail;
+    }else{
+        ctx.body = "Can't find article for this comment!";
         ctx.response.status = 400;
     }
 }

@@ -5,17 +5,17 @@ async function getArticles (ctx, next){
 }
 
 async function getArticleById (ctx, next){
-    return await Articles.getArticleById(ctx.params.id).then(data => ctx.body = data);
+    let article = await Articles.getArticleById(ctx.params.id);
+    if(article.length !=0){
+        return await Articles.getArticleById(ctx.params.id).then(data => ctx.body = data);
+    }else{
+        ctx.body = "Can't find article with such id!";
+        ctx.response.status = 400;
+    }
 }
 
 async function addArticle (ctx, next){ 
-    console.log(ctx.request.body);
-    try{
-        return await Articles.addArticle(ctx.request.body).then(data => ctx.body = data);
-    }catch(err){
-        ctx.body = err.detail;
-        ctx.response.status = 400;
-    }
+    return await Articles.addArticle(ctx.request.body).then(data => ctx.body = data);
 }
 
 async function editArticle (ctx, next){   
