@@ -10,7 +10,7 @@ async function getArticleById (ctx, next){
         return await Articles.getArticleById(ctx.params.id).then(data => ctx.body = data);
     }else{
         ctx.body = "Can't find article with such id!";
-        ctx.response.status = 400;
+        ctx.response.status = 404;
     }
 }
 

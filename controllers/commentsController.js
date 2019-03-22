@@ -20,7 +20,7 @@ async function addComment (ctx, next){
         return await Comments.addComment(ctx.request.body).then(data => ctx.body = data);
     }else{
         ctx.body = "Can't find article for this comment!";
-        ctx.response.status = 400;
+        ctx.response.status = 404;
     }
 }
 
